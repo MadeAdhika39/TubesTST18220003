@@ -12,6 +12,12 @@ from models.userModel import User
 from auth.connect import *
 from enum import Enum
 
+class Tenor(str, Enum):
+    dua_belas_bulan = "12"
+    delapan_belas_bulan = "18"
+    dua_puluh_empat = "24"
+    tiga_puluh = "30"
+
 class bbmModel(str, Enum):
     Pertamax_Turbo = "Pertamax Turbo"
     Pertamax = "Pertamax"
@@ -138,7 +144,7 @@ def update_harga_bbm(lokasi: str, bbm: str,  harga: int, current_user:User = Dep
     return({"motor": "update success"})
 
 @motor_router.get("/motors/harga-bulanan-total/{nama_motor}", tags=["motor"])
-async def get_monthly_total_outcome(nama_motor: str, jangkauan_km_perhari: float, lokasi: str, jenis_bbm: bbmModel,  bunga: float, tenor: int, down_payment: int,  current_user:User = Depends(get_current_user)):
+async def get_monthly_total_outcome(nama_motor: str, jangkauan_km_perhari: float, lokasi: str, jenis_bbm: bbmModel,  bunga: float, tenor: Tenor, down_payment: int,  current_user:User = Depends(get_current_user)):
     cicilans = getCicilan(nama_motor, bunga, tenor, down_payment)
     totalcicilan = cicilans['cicilan']
     harga = {'harga':''}
