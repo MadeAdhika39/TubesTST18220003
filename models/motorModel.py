@@ -1,12 +1,12 @@
 from pydantic import BaseModel, Field
 
 class Motor(BaseModel):
-    tipemotor: str = Field(default=None)
+    nama_motor: str = Field(default=None)
     kmperliter: float = Field(default=None)
     class Config:
         schema_extra = {
             "motor_demo" : {
-                "tipemotor": "beat pop",
+                "nama_motor": "beat pop",
                 "kmperliter": 39.0,
             }
         }

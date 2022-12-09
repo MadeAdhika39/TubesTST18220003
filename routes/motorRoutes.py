@@ -44,17 +44,6 @@ async def get_monthly_bbm_outcome(nama_motor: str, km: float, current_user:User 
     harga['harga'] = jarak / kmperliter * bensin * 30
     return harga
 
-# @motor_router.get("/motors/harga-bulanan-bbm/{nama_motor}", tags=["motor"])
-# async def get_monthly_bbm_outcome_bbmtype(nama_motor: str, jangkauan_km_perhari: float, lokasi: str, jenis_bbm: str, current_user:User = Depends(get_current_user)):
-#     harga = {'harga':''}
-#     motor = motors_parser(collection_name.find_one({"nama_motor": nama_motor}))
-#     jarak = jangkauan_km_perhari
-#     kmperliter = motor['kmperliter']
-#     bbm = bbm_parser(collection_bbm.find_one({"Lokasi": lokasi, "BBM": jenis_bbm}))
-#     bensin = bbm['Harga']
-#     harga['harga'] = jarak / kmperliter * bensin * 30
-#     return harga
-
 @motor_router.get("/motors/harga-bulanan-bbm/{nama_motor}", tags=["motor"])
 async def get_monthly_bbm_outcome_bbmtype(nama_motor: str, jangkauan_km_perhari: float, lokasi: str, jenis_bbm: bbmModel, current_user:User = Depends(get_current_user)):
     harga = {'harga':''}
@@ -116,12 +105,12 @@ def delete_motor(nama_motor: str, current_user:User = Depends(get_current_user))
     return {"motor": "delete success"}
 
 @motor_router.get("/bbm", tags=["bbm"])
-async def get_motors(current_user:User = Depends(get_current_user)):
+async def get_bbms(current_user:User = Depends(get_current_user)):
     motors = bbm_serializer(collection_bbm.find())
     return {"status": "ok", "data": motors}
 
 @motor_router.get("/bbm/search-lokasi/{lokasi}", tags=["bbm"])
-async def get_motors_by_name(lokasi: str, current_user:User = Depends(get_current_user)):
+async def get_bbm_by_location(lokasi: str, current_user:User = Depends(get_current_user)):
     return bbm_serializer(collection_bbm.find({"Lokasi": lokasi}))
 
 
@@ -162,4 +151,3 @@ async def get_monthly_total_outcome(nama_motor: str, jangkauan_km_perhari: float
     hargabensin = jarak / kmperliter * bensin * 30
     harga['harga'] = hargabensin + totalcicilan
     return harga
-    

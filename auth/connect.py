@@ -3,6 +3,12 @@ import requests
 import json
 from enum import Enum
 
+class Tenor(str, Enum):
+    dua_belas_bulan = "12"
+    delapan_belas_bulan = "18"
+    dua_puluh_empat = "24"
+    tiga_puluh = "30"
+
 def get_bearer_token():
     url = 'https://motorvic.wonderfulisland-bafbc83c.centralus.azurecontainerapps.io/login'
     data = {"username": "admin", "password": "admin"}
@@ -19,6 +25,6 @@ def format_get(url: str):
     jsonresponse = response.json()
     return jsonresponse
 
-def getCicilan(jenis_motor: str, bunga: float, tenor: int, down_payment: int):
+def getCicilan(jenis_motor: str, bunga: float, tenor: Tenor, down_payment: int):
     url = f'https://motorvic.wonderfulisland-bafbc83c.centralus.azurecontainerapps.io/motor/cicilan/{jenis_motor}?bunga={bunga}&tenor={tenor}&down_payment={down_payment}'
     return format_get(url)
